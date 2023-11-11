@@ -27,7 +27,7 @@
     "@neshan-maps-platform/vue3-openlayers": "^1.0.6",
     "@types/google-maps": "^3.2.3",
     "@types/openlayers": "^4.6.19",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-opener2": "^4.0.0",
     "ionicons": "^7.0.0",
