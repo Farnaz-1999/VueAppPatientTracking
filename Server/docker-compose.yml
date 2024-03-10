@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    env_file:
+      - .env
+    command: bash -c "
+      uvicorn main:app --host 0.0.0.0 --port 8000 --lifespan=on --use-colors --reload"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    env_file:
+      - .env
+    ports:
+      - "27016:27017"
+    environment:
+      - "MONGO_INITDB_DATABASE=${MONGO_DB}"
+      - "MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}"
+      - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}"
+    command:
+      mongod --quiet --logpath /dev/null
+    volumes:
+      - ~/.myMongo-data:/data/db
+
+  mytb:
+    image: thingsboard/tb-cassandra
+    ports:
+      - "9090:9090"
+      - "1883:1883"
+      - "7070:7070"
+      - "5683-5688:5683-5688/udp"
+    volumes:
+      - ~/.mytb-data:/data
+      - ~/.mytb-logs:/var/log/thingsboard
