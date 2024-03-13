@@ -1,0 +1,121 @@
+CREATE (root:root{name:"root",
+    DataItem: "WR*"
+ }),
+(non_medical_staff:non_medical_staff{name:"non_medical_staff",
+    Telemetry: "R*",
+    PersonalInfo: "wR*",
+    Insurance: "WR*"
+ }),
+(medical_staff:medical_staff{name:"medical_staff",
+    HealthInfo: "WR*",
+    Telemetry: "R*",
+    Insurance: "R*",
+    Telemetry: "R*"
+
+  }),
+(parent:parent{name:"parent",
+    Telemetry: "R",
+    PersonalInfo: "R"
+  }),
+(sister:sister{name:"sister",
+    PersonalInfo: "R"
+  }),
+(Dr:Dr{name:"Dr",
+    Insurance : "R",
+    HealthInfo: "WR*"
+  }),
+(nurse:nurse{name:"nurse",
+    HealthInfo: "WR"
+  }),
+(self:self{name:"self",
+   HealthInfo: "WR*",
+   Telemetry: "R*",
+   Insurance: "R*",
+   Telemetry: "R*"
+ }),
+
+(root)-[:Parent]-> (non_medical_staff),
+(root)-[:Parent]-> (medical_staff),
+(medical_staff)-[:Parent]-> (Dr),
+(medical_staff)-[:Parent]-> (nurse),
+(non_medical_staff)-[:Parent]-> (sister),
+(non_medical_staff)-[:Parent]-> (parent),
+(non_medical_staff)-[:Parent]-> (self),
+
+(Farnaz:user{name:"Farnaz",
+	Insurance:'{"organizationName":"-", "ExpirationTime":"-"}',
+	Telemetry:'{
+		"HealthTelemetry":{"pulsRate":"75","bloodPressure":"11/9"}, 
+		"PersonalTelemetry":{
+			"Location":{"x":"15","y":"85"}
+			}
+	}',
+	PersonalInfo:'{
+		"BiometricInfo":{"BloodType":"A+", "EyeColor":"black"},
+		"PersonalData":{"Name":"Farnaz", "age":"-", "IDNo":"-"}
+	}',
+	HealthInfo:'{
+		"Past":{"precedure":"-", "recognition":"-", "prescription":"-"},
+		"Current":{"precedure":"-", "recognition":"-", "prescription":"-"}
+	}'
+
+}),
+(Homayoun:user{name:"Homayoun",
+	Insurance:'{"organizationName":"-", "ExpirationTime":"-"}',
+	Telemetry:'{
+		"HealthTelemetry":{"pulsRate":"72","bloodPressure":"11/9"}, 
+		"PersonalTelemetry":{
+			"Location":{"x":"15","y":"56"}
+			}
+	}',
+	PersonalInfo:'{
+		"BiometricInfo":{"BloodType":"A+", "EyeColor":"blue"},
+		"PersonalData":{"Name":"Homayoun", "age":"-", "IDNo":"-"}
+	}',
+	HealthInfo:'{
+		"Past":{"precedure":"-", "recognition":"-", "prescription":"-"},
+		"Current":{"precedure":"-", "recognition":"-", "prescription":"-"}
+	}'
+  }),
+(Tannaz:user{name:"Tannaz",
+	Insurance:'{"organizationName":"-", "ExpirationTime":"-"}',
+	Telemetry:'{
+		"HealthTelemetry":{"pulsRate":"72","bloodPressure":"9/7"}, 
+		"PersonalTelemetry":{
+			"Location":{"x":"15","y":"96"}
+			}
+	}',
+	PersonalInfo:'{
+		"BiometricInfo":{"BloodType":"O+", "EyeColor":"blue"},
+		"PersonalData":{"Name":"Tannaz", "age":"-", "IDNo":"-"}
+	}',
+	HealthInfo:'{
+		"Past":{"precedure":"-", "recognition":"-", "prescription":"-"},
+		"Current":{"precedure":"-", "recognition":"-", "prescription":"-"}
+	}'
+}),	
+(Ali:user{name:"Ali",
+	Insurance:'{"organizationName":"-", "ExpirationTime":"-"}',
+	Telemetry:'{
+		"HealthTelemetry":{"pulsRate":"76","bloodPressure":"9/7"}, 
+		"PersonalTelemetry":{
+			"Location":{"x":"54","y":"96"}
+			}
+	}',
+	PersonalInfo:'{
+		"BiometricInfo":{"BloodType":"O+", "EyeColor":"green"},
+		"PersonalData":{"Name":"Ali", "age":"35", "IDNo":"-"}
+	}',
+	HealthInfo:'{
+		"Past":{"precedure":"-", "recognition":"-", "prescription":"-"},
+		"Current":{"precedure":"-", "recognition":"-", "prescription":"-"}
+	}'
+  }),
+(Tannaz)-[:isSisterOf]-> (Farnaz),
+(Ali)-[:isParentOf]-> (Farnaz),
+(Homayoun)-[:isDrOf]-> (Farnaz),
+(Farnaz)-[:is]-> (self),
+(Ali)-[:is]-> (parent),
+(Tannaz)-[:is]-> (sister),
+(Homayoun)-[:is]-> (Dr)
+
